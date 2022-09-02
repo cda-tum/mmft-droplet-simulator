@@ -1,0 +1,3 @@
+OUTPUT_DIRECTORY        = @CMAKE_CURRENT_BINARY_DIR@/doc/
+INPUT                   = @CMAKE_CURRENT_SOURCE_DIR@/include/droplet-simulator/ @CMAKE_CURRENT_SOURCE_DIR@/src @CMAKE_CURRENT_SOURCE_DIR@/src/architecture @CMAKE_CURRENT_SOURCE_DIR@/src/nodalAnalysis @CMAKE_CURRENT_SOURCE_DIR@/src/simulation @CMAKE_CURRENT_SOURCE_DIR@/src/simulation/events @CMAKE_CURRENT_SOURCE_DIR@/doc
+PROJECT_NAME            = "Modular Microfluidics Simulator"
