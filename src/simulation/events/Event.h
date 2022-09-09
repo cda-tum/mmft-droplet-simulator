@@ -17,6 +17,7 @@ class Event {
     /**
      * @brief Specifies an event to take place.
      * @param[in] time The time at which the event should take place, in s elapsed since the start of the simulation.
+     * @param[in] priority Priority of an event, which is important when two events occur at the same time (the lower the value the higher the priority).
      */
     Event(double time, int priority) : time(time), priority(priority) {}
 

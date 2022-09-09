@@ -11,20 +11,23 @@ The implementation should be compatible with any current C++ compiler supporting
 
 If you have doxygen installed, a detailed documentation can be build with the following command inside the build folder of the project: 
 ```bash 
-make documentation
+make dropletDocumentation
 ```
 
 The documentation will be written to the doc folder within your build folder.
 
-## Use in your Project
+## Usage
 To use this library include the following code in your cmake file: 
 ```cmake
 include(FetchContent)
 FetchContent_Declare(
     droplet
-    GIT_REPOSITORY https://github.com/IIC-Microfluidics/droplet-simulator.git
+    GIT_REPOSITORY https://github.com/cda-tum/mmft-droplet-simulator.git
+    GIT_TAG master
 )
 FetchContent_MakeAvailable(droplet)
+
+target_link_libraries(${TARGET} PRIVATE droplet)
 ```
 and include the library API header in your project file:
 ```cpp

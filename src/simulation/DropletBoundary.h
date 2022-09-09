@@ -9,8 +9,14 @@
 
 namespace sim {
 
+/**
+ * @brief Enum to specify in which state a droplet boundary currently is.
+ */
 enum class BoundaryState { NORMAL, WAIT_INFLOW, WAIT_OUTFLOW };
 
+/**
+ * @brief Class to specify a boundary of a droplet.
+ */
 class DropletBoundary {
   private:
     arch::ChannelPosition channelPosition;  ///< Channel position of the boundary.
@@ -21,7 +27,6 @@ class DropletBoundary {
   public:
     /**
      * @brief Construct a new droplet boundary
-     *
      * @param channel Channel of the boundary.
      * @param position Position of the boundary within the channel.
      * @param volumeTowardsNode0 Direction in which the volume of the boundary is located (true if it is towards node0).

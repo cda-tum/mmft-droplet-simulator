@@ -49,10 +49,6 @@ class Droplet {
      * @param[in] id Unique identifier of the droplet.
      * @param[in] volume Volume of the droplet in m^3.
      * @param[in] fluid Pointer to fluid the droplet consists of.
-     * @param[in] headChannel Channel where the head of the droplet will be injected.
-     * @param[in] headInjectionPosition Position will be set at injection, 0.0 before.
-     * @param[in] tailChannel Channel where the tail of the droplet will be injected.
-     * @param[in] tailInjectionPosition Position will be set at injection, 0.0 before.
      */
     Droplet(int id, double volume, Fluid* fluid);
 
@@ -112,9 +108,14 @@ class Droplet {
 
     /**
      * @brief Get the Boundaries object
-     * @return const std::vector<std::unique_ptr<sim::DropletBoundary>>&
+     * @return all boundaries
      */
     const std::vector<std::unique_ptr<sim::DropletBoundary>>& getBoundaries() const;
+
+    /**
+     * @brief Get all fully occupied channels
+     * @return all fully occupied channels
+     */
     std::vector<arch::Channel*>& getFullyOccupiedChannels();
 
     /**
@@ -180,8 +181,16 @@ class Droplet {
      */
     void updateBoundaries(const arch::Chip& chip, double slipFactor);
 
+    /**
+     * @brief Adds a droplet from which the current droplet was created by merging.
+     * @param droplet Pointer to droplet.
+     */
     void addMergedDroplet(Droplet* droplet);
 
+    /**
+     * @brief Gets the list of droplets, that created the actual droplet due to merging.
+     * @return List of merged droplets.
+     */
     const std::vector<Droplet*>& getMergedDroplets() const;
 };
 

@@ -18,25 +18,41 @@ struct ChannelPosition {
     int channelId;    ///< Id of the channel.
     double position;  ///< The relative position (between 0.0 and 1.0) within the channel.
 
+    /**
+     * @brief Construct a channel position.
+     * @param[in] channelId Id of the channel.
+     * @param[in] position Relative position inside the channel.
+     */
     ChannelPosition(int channelId, double position);
 };
 
+/**
+ * @brief Enum to specify in which state a droplet boundary is currently in.
+ */
 enum class BoundaryState { NORMAL, WAIT_INFLOW, WAIT_OUTFLOW };
 
 /**
- * @brief Struct to contain a droplet boundary specified by channel position and flow direction.
+ * @brief Struct containing a boundary of a droplet.
  */
 struct DropletBoundary {
     ChannelPosition position;  ///< At which channel and at which position within the channel the droplet boundary is located.
-    bool volumeTowards0;       ///< Indicates if the volume of the droplet is located from the current position towards node 0 (or if not towards node 1).
-    double flowRate;
-    BoundaryState state;
+    bool volumeTowards0;       ///< Indicates if the volume of the droplet is located from the current position towards node 0 (or if false towards node 1).
+    double flowRate;           ///< Current flow rate of the boundary
+    BoundaryState state;       ///< State in which the boundary is currently in
 
+    /**
+     * @brief Construct a droplet boundary
+     * @param[in] channelId Id of the channel the boundary is present.
+     * @param[in] position Relative position of the boundary within the channel.
+     * @param[in] volumeTowards0 Direction in which the volume of the boundary is located (true if it is towards node0).
+     * @param[in] flowRate Current flow rate of the boundary.
+     * @param[in] state State in which the boundary is currently in.
+     */
     DropletBoundary(int channelId, double position, bool volumeTowards0, double flowRate, BoundaryState state);
 };
 
 /**
- * @brief Enum to specify in which state the droplet currently is in.
+ * @brief Enum to specify in which state the droplet is currently in.
  */
 enum class DropletState {
     INJECTION,  ///< Droplet planned to be injected but currently not yet in the network.
@@ -46,13 +62,17 @@ enum class DropletState {
 };
 
 /**
- * @brief Struct to contain a droplet position specified by a droplet boundary for both the head and the tail of a droplet and the channel ids of the fully occupied channels in between.
+ * @brief Struct to contain the current position of a droplet during a particular time step.
  */
 struct DropletPosition {
-    std::vector<DropletBoundary> boundaries;
-    std::vector<int> channelIds;  ///< Contains the ids of the channels that are fully occupied by the droplet.
-    DropletState state;
+    std::vector<DropletBoundary> boundaries;  ///< Contain all boundaries which are present during a particular time step.
+    std::vector<int> channelIds;              ///< Contains the ids of the channels that are fully occupied by the droplet.
+    DropletState state;                       ///< State in which the droplet is currently in.
 
+    /**
+     * @brief Constructs a droplet position.
+     * @param[in] state State in which the droplet is currently in.
+     */
     DropletPosition(DropletState state);
 };
 
@@ -67,6 +87,14 @@ struct Fluid {
     double density;                  ///< Density of the fluid in kg/m^3.
     double concentration;            ///< Concentration of the fluid in % (between 0.0 and 1.0).
 
+    /**
+     * @brief Constructs a fluid.
+     * @param[in] id Unique identifier of the fluid.
+     * @param[in] name Name of the channel.
+     * @param[in] viscosity Viscosity of the fluid in Pas.
+     * @param[in] density Density of the fluid in kg/m^3.
+     * @param[in] concentration Concentration of the fluid in % (between 0.0 and 1.0).
+     */
     Fluid(int id, std::string name, double viscosity, double density, double concentration);
 };
 
@@ -80,6 +108,13 @@ struct Droplet {
     double volume;                      ///< Volume of the droplet in m^3.
     int fluidId;                        ///< Fluid of the droplet.
 
+    /**
+     * @brief Constructs a droplet.
+     * @param[in] id Unique identifier of the droplet.
+     * @param[in] name Name of the channel.
+     * @param[in] volume Volume of the droplet in m^3.
+     * @param[in] fluidId Id of the fluid the droplet consists of.
+     */
     Droplet(int id, std::string name, double volume, int fluidId);
 };
 
@@ -92,6 +127,14 @@ struct Injection {
     double time;               ///< Time in s at which the injection takes place.
     ChannelPosition position;  ///< Position at which the droplet should be injected.
 
+    /**
+     * @brief Constructs an injection.
+     * @param[in] id Unique identifier of an injection.
+     * @param[in] dropletId Id of the droplet which gets injected.
+     * @param[in] time Time at which the droplet is injected.
+     * @param[in] channelId Id of the channel in which the droplet is injected.
+     * @param[in] position Relative position (between 0.0 and 1.0) of the middle of the droplet inside channel.
+     */
     Injection(int id, int dropletId, double time, int channelId, double position);
 };
 
@@ -117,6 +160,17 @@ struct Channel {
     double length;     ///< Length of the channel in m.
     ChannelType type;  ///< What kind of channel it is.
 
+    /**
+     * @brief Constructs a channel.
+     * @param[in] id Id of the channel.
+     * @param[in] name Name of the channel.
+     * @param[in] node0Id Id of the node at the start of the channel.
+     * @param[in] node1Id Id of the node at the end of the channel.
+     * @param[in] width Width of the channel in m.
+     * @param[in] height Height of the channel in m.
+     * @param[in] length Length of the channel in m.
+     * @param[in] type Type of the channel.
+     */
     Channel(int id, std::string name, int node0Id, int node1Id, double width, double height, double length, ChannelType type);
 };
 
@@ -130,6 +184,14 @@ struct FlowRatePump {
     int node1Id;       ///< Id of the node at the other end of the flow rate pump.
     double flowRate;   ///< Flow rate in m^3/s.
 
+    /**
+     * @brief Constructs a flow rate pump.
+     * @param[in] id Id of the flow rate pump.
+     * @param[in] name Name of the pump.
+     * @param[in] node0Id Id of the node at the start of the pump.
+     * @param[in] node1Id Id of the node at the end of the pump.
+     * @param[in] flowRate Volumetric flow rate of the pump in m^3/s.
+     */
     FlowRatePump(int id, std::string name, int node0Id, int node1Id, double flowRate);
 };
 
@@ -143,6 +205,14 @@ struct PressurePump {
     int node1Id;       ///< Id of the node at the other end of the pressure pump.
     double pressure;   ///< Pressure in Pa.
 
+    /**
+     * @brief Constructs a pressure pump.
+     * @param[in] id Id of the pressure pump.
+     * @param[in] name Name of the pump.
+     * @param[in] node0Id Id of the node at the start of the pump.
+     * @param[in] node1Id Id of the node at the end of the pump.
+     * @param[in] pressure Pressure of the pump in Pa.
+     */
     PressurePump(int id, std::string name, int node0Id, int node1Id, double pressure);
 };
 
@@ -165,7 +235,12 @@ struct State {
     std::unordered_map<int, double> pressures;                  ///< Keys are the nodeIds.
     std::unordered_map<int, double> flowRates;                  ///< Keys are the edgeIds (channels and pumps).
     std::unordered_map<int, DropletPosition> dropletPositions;  ///< Only contains the position of droplets that are currently inside the network (key is the droplet id).
-
+    
+    /**
+     * @brief Constructs a state, which represent a time step during a simulation.
+     * @param[in] id Id of the state
+     * @param[in] time Value of the current time step.
+     */
     State(int id, double time);
 
     /**
@@ -198,7 +273,11 @@ struct State {
 struct DropletPathPosition {
     int stateId;               ///< Id of the state
     std::set<int> channelIds;  ///< Set of channel ids that represent the actual location of all boundaries and fully occupied channels
-
+    
+    /**
+     * @brief Constructs a droplet position for the DropletPath class.
+     * @param[in] stateId Id of the state for which the class is used for.
+     */
     DropletPathPosition(int stateId);
 };
 
@@ -208,12 +287,16 @@ struct DropletPathPosition {
 struct DropletPath {
     int dropletId;                               ///< Id of the droplet
     std::vector<DropletPathPosition> positions;  ///< For each state a DropletPathPosition is stored, except for states where the droplet would have the same location as the previous one.
-
+    
+    /**
+     * @brief Constructs a droplet path for a certain droplet.
+     * @param[in] dropletId Id of the droplet.
+     */
     DropletPath(int dropletId);
 
     /**
      * @brief Converts the struct to a json string.
-     * @param indent Indentation to use when the string is constructed. Default is -1, which disables the indentation.
+     * @param[in] indent Indentation to use when the string is constructed. Default is -1, which disables the indentation.
      * @return json string
      */
     std::string toJson(int indent = -1) const;

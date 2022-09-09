@@ -175,7 +175,7 @@ class Simulation {
 
     /**
      * @brief Get injection
-     * @param nodeId The id of the injection
+     * @param injectionId The id of the injection
      * @return Pointer to injection with the corresponding id.
      */
     Injection* getInjection(int injectionId);

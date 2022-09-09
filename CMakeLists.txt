@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.21.0)
 project(droplet-simulator
     VERSION 1.0.0
     DESCRIPTION "Simulator for droplet-based microfluidic devices"
-    HOMEPAGE_URL "https://iic.jku.at/eda/research/microfluidics/"
+    HOMEPAGE_URL "https://github.com/cda-tum/mmft-droplet-simulator.git"
     LANGUAGES CXX
 )
 
@@ -31,26 +31,18 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(eigen googletest json)
 
+# documentation
 find_package(Doxygen)
-option(BUILD_DOC "Build documentation" OFF)
 
-if(BUILD_DOC)
-    if(DOXYGEN_FOUND)
-        set(doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile.in)
-        set(doxyfile ${CMAKE_CURRENT_BINARY_DIR}/doc/Doxyfile)
+if(DOXYGEN_FOUND)
+    # set main page for doxygen
+    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "DoxygenMainPage.md")
 
-        configure_file(${doxyfile_in} ${doxyfile} @ONLY)
-
-        add_custom_target(documentation ALL
-            COMMAND ${DOXYGEN_EXECUTABLE} ${doxyfile}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc
-            COMMENT "Generating API documentation with Doxygen"
-            VERBATIM)
-
-        install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/html DESTINATION share/doc)
-    else(DOXYGEN_FOUND)
-        message(FATAL_ERROR "Doxygen is needed to build the documentation.")
-    endif()
+    # add target for documentaiton
+    doxygen_add_docs(
+        dropletDocumentation
+        "src/" "include/" "doc/DoxygenMainPage.md"
+    )
 endif()
 
 # add library
@@ -73,7 +65,7 @@ if(PROJECT_IS_TOP_LEVEL)
     add_executable(dropletMain)
     target_sources(dropletMain PUBLIC src/main.cpp)
     target_link_libraries(dropletMain PRIVATE ${TARGET_NAME})
-    
+
     # tests
     enable_testing()
     include(GoogleTest)
