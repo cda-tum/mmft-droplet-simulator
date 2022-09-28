@@ -221,7 +221,7 @@ bool Chip::isNetworkValid() {
         visitedChannels[k] = false;
     }
 
-    visitNodes(-1, visitedNodes, visitedChannels);
+    visitNodes(getGroundId(), visitedNodes, visitedChannels);
 
     std::string errorNodes = "";
     for (auto const& [k, v] : nodes) {
