@@ -37,6 +37,7 @@ find_package(Doxygen)
 if(DOXYGEN_FOUND)
     # set main page for doxygen
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "DoxygenMainPage.md")
+    set(DOXYGEN_IMAGE_PATH "doc/images")
 
     # add target for documentaiton
     doxygen_add_docs(
