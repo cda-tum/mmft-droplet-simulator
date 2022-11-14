@@ -36,3 +36,7 @@ build/
 external/*/
 .cache/
 .vscode
+
+# typescript
+typescript/dist
+typescript/node_modules

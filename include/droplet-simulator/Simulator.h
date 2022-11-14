@@ -3,6 +3,7 @@
  */
 
 #pragma once
+#include <emscripten/bind.h>
 
 #include <memory>
 
@@ -126,3 +127,30 @@ class Simulator {
 };
 
 }  // namespace droplet
+
+
+EMSCRIPTEN_BINDINGS(my_class) {
+  emscripten::class_<droplet::Simulator>("Simulator")
+    .constructor<>()
+    .function("addChannel", &droplet::Simulator::addChannel)
+    .function("addBypassChannel", &droplet::Simulator::addBypassChannel)
+    .function("addFlowRatePump", &droplet::Simulator::addFlowRatePump)
+    .function("addPressurePump", &droplet::Simulator::addPressurePump)
+    .function("addSink", &droplet::Simulator::addSink)
+    .function("addGround", &droplet::Simulator::addGround)
+    .function("checkChipValidity", &droplet::Simulator::checkChipValidity)
+    .function("addFluid", &droplet::Simulator::addFluid)
+    .function("setContinuousPhase", &droplet::Simulator::setContinuousPhase)
+    .function("setMaximalAdaptiveTimeStep", &droplet::Simulator::setMaximalAdaptiveTimeStep)
+    .function("addDroplet", &droplet::Simulator::addDroplet)
+    .function("simulate", &droplet::Simulator::simulate)
+    ;
+
+    emscripten::class_<droplet::SimulationResult>("SimulationResult")
+    .constructor<>()
+    .property("continuousPhaseId", &droplet::SimulationResult::continuousPhaseId)
+    .property("maximalAdaptiveTimeStep", &droplet::SimulationResult::maximalAdaptiveTimeStep)
+    .property("resistanceModel", &droplet::SimulationResult::resistanceModel)
+    .function("toJson", &droplet::SimulationResult::toJson)
+    ;
+}
