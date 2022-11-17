@@ -1,13 +1,17 @@
 # MMFT Droplet Simulator
 A Droplet Simulator for Microfluidic Biochips developed by the [Chair for Design Automation](https://www.cda.cit.tum.de/) at the [Technical University of Munich](https://www.tum.de/) as part of the Munich MicroFluidic Toolkit (MMFT).
 This simulator exploits the 1D analysis model, which is especially suited for simulating designs before even the first prototype is fabricated and for design space explorations. Furthermore, it allows to simulate droplets and their respective paths inside a Lab-on-a-Chip (LoC) with closed micro-channels.
-More details about the implementation can be found in
+More details about the implementation can be found in:
 
-[[1]](https://www.cda.cit.tum.de/files/eda/2019_jetc_advanced_simulation_droplet_microfluidics.pdf) A. Grimmer, M. Hamidović, W. Haselmayr, and R. Wille. Advanced Simulation of Droplet Microfluidics. Journal on Emerging Technologies in Computing Systems (JETC), 2019.
+[[1]](https://doi.org/10.1016/j.simpa.2022.100440) G. Fink, F. Costamoling, and R. Wille. MMFT Droplet Simulator: Efficient Simulation of Droplet-based Microfluidic Devices. Software Impacts, 2022.
+
+Additionally, an older version implemented in Java might also be helpful for implementation details:
+
+[[2]](https://www.cda.cit.tum.de/files/eda/2019_jetc_advanced_simulation_droplet_microfluidics.pdf) A. Grimmer, M. Hamidović, W. Haselmayr, and R. Wille. Advanced Simulation of Droplet Microfluidics. Journal on Emerging Technologies in Computing Systems (JETC), 2019.
 
 A corresponding case study is provided in:
 
-[[2]](https://www.cda.cit.tum.de/files/eda/2018_rscadv_simulation_before_fabrication.pdf) A. Grimmer, X. Chen, M. Hamidovic, W. Haselmayr, C. L. Ren, and R. Wille. Simulation before fabrication: a case study on the utilization of simulators for the design of droplet microfluidic networks. RSC Advances, 8(60):34733–34742, 2018.
+[[3]](https://www.cda.cit.tum.de/files/eda/2018_rscadv_simulation_before_fabrication.pdf) A. Grimmer, X. Chen, M. Hamidovic, W. Haselmayr, C. L. Ren, and R. Wille. Simulation before fabrication: a case study on the utilization of simulators for the design of droplet microfluidic networks. RSC Advances, 8(60):34733–34742, 2018.
 
 For more information about our work on Microfluidics, please visit https://www.cda.cit.tum.de/research/microfluidics/. 
 
