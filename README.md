@@ -1,5 +1,5 @@
 # MMFT Droplet Simulator
-A Droplet Simulator for Microfluidic Biochips developed by the [Chair for Design Automation](https://www.cda.cit.tum.de/) at the [Technical University of Munich](https://www.tum.de/). as part of the Munich MicroFluidic Toolkit (MMFT). 
+A Droplet Simulator for Microfluidic Biochips developed by the [Chair for Design Automation](https://www.cda.cit.tum.de/) at the [Technical University of Munich](https://www.tum.de/) as part of the Munich MicroFluidic Toolkit (MMFT).
 This simulator exploits the 1D analysis model, which is especially suited for simulating designs before even the first prototype is fabricated and for design space explorations. Furthermore, it allows to simulate droplets and their respective paths inside a Lab-on-a-Chip (LoC) with closed micro-channels.
 More details about the implementation can be found in
 
@@ -142,10 +142,11 @@ int main(int argc, char const* argv[]) {
 If you use our tool for your research, we will be thankful if you refer to it by citing the following publication.
 
 ```bibtex
-@article{grimmer2019advanced,
-  title={Advanced Simulation of Droplet Microfluidics},
-  author={Grimmer, Andreas and Hamidovi{\'{c}}, Medina and Haselmayr, Werner and Wille, Robert},
-  journal=JETC,
-  year={2019}
+@article{fink2022mmft,
+   title={MMFT Droplet Simulator: Efficient Simulation of Droplet-based Microfluidic Devices},
+   author={Fink, Gerold and Costamoling, Florina and Wille, Robert},
+   journal={Software Impacts},
+   doi={10.1016/j.simpa.2022.100440},
+   year={2022}
 }
 ```
