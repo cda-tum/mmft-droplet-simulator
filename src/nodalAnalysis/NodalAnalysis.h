@@ -15,6 +15,7 @@
 #include "IPressurePump.h"
 #include "IResistance.h"
 
+namespace arch { class Channel; class FlowRatePump; class PressurePump; }
 namespace nodal {
 
 /**
@@ -26,7 +27,7 @@ namespace nodal {
  * @param[in,out] pressurePumps List of pressure pumps.
  * @param[in] flowRatePumps List of flowrate pumps.
  */
-void conductNodalAnalysis(const std::unordered_map<int, std::tuple<INode*, int>>& nodes, const std::vector<IResistance*>& channels, const std::vector<IPressurePump*>& pressurePumps, const std::vector<IFlowRatePump*>& flowRatePumps);
+void conductNodalAnalysis(const std::unordered_map<int, std::tuple<INode*, int>>& nodes, const std::vector<arch::Channel*>& channels, const std::vector<arch::PressurePump*>& pressurePumps, const std::vector<arch::FlowRatePump*>& flowRatePumps);
 
 }  // namespace nodal
 

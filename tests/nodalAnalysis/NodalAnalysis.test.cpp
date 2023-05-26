@@ -26,18 +26,18 @@ TEST(NodalAnalysis, testNetwork1) {
 
     // pressure pump (voltage sources)
     PressurePump v0(0, &nodeGround, &node0, 1.0);
-    unordered_map<int, IPressurePump *> pressurePumps{{v0.getId(), &v0}};
+    unordered_map<int, PressurePump *> pressurePumps{{v0.getId(), &v0}};
 
     // flowRate pump (current source)
     FlowRatePump i0(0, &nodeGround, &node2, 1.0);
-    unordered_map<int, IFlowRatePump *> flowRatePumps{{i0.getId(), &i0}};
+    unordered_map<int, FlowRatePump *> flowRatePumps{{i0.getId(), &i0}};
 
     // channels
     Channel c1(1, &node0, &node1, 5);
     Channel c2(2, &node1, &nodeGround, 10);
     Channel c3(3, &node2, &node3, 5);
     Channel c4(4, &node3, &nodeGround, 10);
-    unordered_map<int, IResistance *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}, {c4.getId(), &c4}};
+    unordered_map<int, Channel *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}, {c4.getId(), &c4}};
 
     // compute network
     std::unordered_map<int, std::tuple<nodal::INode *, int>> nodesNA;
@@ -51,15 +51,15 @@ TEST(NodalAnalysis, testNetwork1) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance *> channelsNA;
+    std::vector<arch::Channel *> channelsNA;
     for (auto &[key, channel] : channels) {
         channelsNA.push_back(channel);
     }
-    std::vector<nodal::IFlowRatePump *> flowRatePumpsNA;
+    std::vector<arch::FlowRatePump *> flowRatePumpsNA;
     for (auto &[key, pump] : flowRatePumps) {
         flowRatePumpsNA.push_back(pump);
     }
-    std::vector<nodal::IPressurePump *> pressurePumpsNA;
+    std::vector<arch::PressurePump *> pressurePumpsNA;
     for (auto &[key, pump] : pressurePumps) {
         pressurePumpsNA.push_back(pump);
     }
@@ -97,18 +97,18 @@ TEST(NodalAnalysis, testNetwork2) {
     // pressure pump (voltage sources)
     PressurePump v0(0, &nodeGround, &node0, 1.0);
     PressurePump v1(1, &node4, &nodeGround, 2.0);
-    unordered_map<int, IPressurePump *> pressurePumps{{v0.getId(), &v0}, {v1.getId(), &v1}};
+    unordered_map<int, PressurePump *> pressurePumps{{v0.getId(), &v0}, {v1.getId(), &v1}};
 
     // flowRate pump (current source)
     FlowRatePump i0(0, &nodeGround, &node1, 1.0);
-    unordered_map<int, IFlowRatePump *> flowRatePumps{{i0.getId(), &i0}};
+    unordered_map<int, FlowRatePump *> flowRatePumps{{i0.getId(), &i0}};
 
     // channels
     Channel c1(1, &node0, &node1, 5);
     Channel c2(2, &nodeGround, &node1, 10);
     Channel c3(3, &node1, &node2, 20);
     Channel c4(4, &node2, &node3, 30);
-    unordered_map<int, IResistance *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}, {c4.getId(), &c4}};
+    unordered_map<int, Channel *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}, {c4.getId(), &c4}};
 
     // compute network
     // compute network
@@ -123,15 +123,15 @@ TEST(NodalAnalysis, testNetwork2) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance *> channelsNA;
+    std::vector<arch::Channel *> channelsNA;
     for (auto &[key, channel] : channels) {
         channelsNA.push_back(channel);
     }
-    std::vector<nodal::IFlowRatePump *> flowRatePumpsNA;
+    std::vector<arch::FlowRatePump *> flowRatePumpsNA;
     for (auto &[key, pump] : flowRatePumps) {
         flowRatePumpsNA.push_back(pump);
     }
-    std::vector<nodal::IPressurePump *> pressurePumpsNA;
+    std::vector<arch::PressurePump *> pressurePumpsNA;
     for (auto &[key, pump] : pressurePumps) {
         pressurePumpsNA.push_back(pump);
     }
@@ -185,17 +185,17 @@ TEST(NodalAnalysis, testNetwork3) {
     // pressure pump (voltage sources)
     PressurePump v0(0, &node1, &node0, 32.0);
     PressurePump v1(1, &node2, &nodeGround, 20.0);
-    unordered_map<int, IPressurePump *> pressurePumps{{v0.getId(), &v0}, {v1.getId(), &v1}};
+    unordered_map<int, PressurePump *> pressurePumps{{v0.getId(), &v0}, {v1.getId(), &v1}};
 
     // flowRate pump (current source)
     // FlowRatePump i0(&nodeGround, &node1, 1.0);
-    unordered_map<int, IFlowRatePump *> flowRatePumps{};
+    unordered_map<int, FlowRatePump *> flowRatePumps{};
 
     // channels
     Channel c1(1, &nodeGround, &node0, 2);
     Channel c2(2, &node1, &node2, 4);
     Channel c3(3, &node1, &nodeGround, 8);
-    unordered_map<int, IResistance *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}};
+    unordered_map<int, Channel *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}};
 
     // compute network
     // compute network
@@ -210,15 +210,15 @@ TEST(NodalAnalysis, testNetwork3) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance *> channelsNA;
+    std::vector<arch::Channel *> channelsNA;
     for (auto &[key, channel] : channels) {
         channelsNA.push_back(channel);
     }
-    std::vector<nodal::IFlowRatePump *> flowRatePumpsNA;
+    std::vector<arch::FlowRatePump *> flowRatePumpsNA;
     for (auto &[key, pump] : flowRatePumps) {
         flowRatePumpsNA.push_back(pump);
     }
-    std::vector<nodal::IPressurePump *> pressurePumpsNA;
+    std::vector<arch::PressurePump *> pressurePumpsNA;
     for (auto &[key, pump] : pressurePumps) {
         pressurePumpsNA.push_back(pump);
     }
@@ -251,17 +251,17 @@ TEST(NodalAnalysis, testNetwork4) {
 
     // pressure pump (voltage sources)
     PressurePump v0(0, &node0, &node1, 32.0);
-    unordered_map<int, IPressurePump *> pressurePumps{{v0.getId(), &v0}};
+    unordered_map<int, PressurePump *> pressurePumps{{v0.getId(), &v0}};
 
     // flowRate pump (current source)
     FlowRatePump i0(0, &node0, &nodeGround, 20.0);
-    unordered_map<int, IFlowRatePump *> flowRatePumps{{i0.getId(), &i0}};
+    unordered_map<int, FlowRatePump *> flowRatePumps{{i0.getId(), &i0}};
 
     // channels
     Channel c1(1, &nodeGround, &node0, 2);
     Channel c2(2, &node0, &node1, 4);
     Channel c3(3, &node1, &nodeGround, 8);
-    unordered_map<int, IResistance *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}};
+    unordered_map<int, Channel *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}};
 
     // compute network
     // compute network
@@ -276,15 +276,15 @@ TEST(NodalAnalysis, testNetwork4) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance *> channelsNA;
+    std::vector<arch::Channel *> channelsNA;
     for (auto &[key, channel] : channels) {
         channelsNA.push_back(channel);
     }
-    std::vector<nodal::IFlowRatePump *> flowRatePumpsNA;
+    std::vector<arch::FlowRatePump *> flowRatePumpsNA;
     for (auto &[key, pump] : flowRatePumps) {
         flowRatePumpsNA.push_back(pump);
     }
-    std::vector<nodal::IPressurePump *> pressurePumpsNA;
+    std::vector<arch::PressurePump *> pressurePumpsNA;
     for (auto &[key, pump] : pressurePumps) {
         pressurePumpsNA.push_back(pump);
     }
@@ -315,18 +315,18 @@ TEST(NodalAnalysis, testNetwork5) {
     unordered_map<int, INode *> nodes{{nodeGround.getId(), &nodeGround}, {node0.getId(), &node0}, {node1.getId(), &node1}, {node2.getId(), &node2}};
 
     // pressure pump (voltage sources)
-    unordered_map<int, IPressurePump *> pressurePumps{};
+    unordered_map<int, PressurePump *> pressurePumps{};
 
     // flowRate pump (current source)
     FlowRatePump i0(0, &node0, &nodeGround, 1.0);
     FlowRatePump i1(1, &node2, &nodeGround, 1.5);
-    unordered_map<int, IFlowRatePump *> flowRatePumps{{i0.getId(), &i0}, {i1.getId(), &i1}};
+    unordered_map<int, FlowRatePump *> flowRatePumps{{i0.getId(), &i0}, {i1.getId(), &i1}};
 
     // channels
     Channel c1(1, &node0, &node1, 5);
     Channel c2(2, &node1, &node2, 7);
     Channel c3(3, &node1, &nodeGround, 10);
-    unordered_map<int, IResistance *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}};
+    unordered_map<int, Channel *> channels{{c1.getId(), &c1}, {c2.getId(), &c2}, {c3.getId(), &c3}};
 
     // compute network
     // compute network
@@ -341,15 +341,15 @@ TEST(NodalAnalysis, testNetwork5) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance *> channelsNA;
+    std::vector<arch::Channel *> channelsNA;
     for (auto &[key, channel] : channels) {
         channelsNA.push_back(channel);
     }
-    std::vector<nodal::IFlowRatePump *> flowRatePumpsNA;
+    std::vector<arch::FlowRatePump *> flowRatePumpsNA;
     for (auto &[key, pump] : flowRatePumps) {
         flowRatePumpsNA.push_back(pump);
     }
-    std::vector<nodal::IPressurePump *> pressurePumpsNA;
+    std::vector<::PressurePump *> pressurePumpsNA;
     for (auto &[key, pump] : pressurePumps) {
         pressurePumpsNA.push_back(pump);
     }

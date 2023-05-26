@@ -3,7 +3,9 @@
 #include <tuple>
 #include <unordered_map>
 #include <vector>
-
+#include "Channel.h"
+#include "FlowRatePump.h"
+#include "PressurePump.h"
 #include "Eigen/Dense"
 #include "IFlowRatePump.h"
 #include "INode.h"
@@ -14,7 +16,7 @@ using Eigen::VectorXd;
 
 namespace nodal {
 
-void conductNodalAnalysis(const std::unordered_map<int, std::tuple<INode*, int>>& nodes, const std::vector<IResistance*>& channels, const std::vector<IPressurePump*>& pressurePumps, const std::vector<IFlowRatePump*>& flowRatePumps) {
+void conductNodalAnalysis(const std::unordered_map<int, std::tuple<INode*, int>>& nodes, const std::vector<arch::Channel*>& channels, const std::vector<arch::PressurePump*>& pressurePumps, const std::vector<arch::FlowRatePump*>& flowRatePumps) {
     const int nNodes = nodes.size() - 1;  // -1 due to ground node
     const int nPressurePumps = pressurePumps.size();
     const int nFlowRatePumps = flowRatePumps.size();

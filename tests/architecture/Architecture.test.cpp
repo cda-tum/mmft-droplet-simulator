@@ -47,15 +47,15 @@ TEST(Chip, testNetwork1) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance*> channels;
+    std::vector<arch::Channel *> channels;
     for (const auto& [key, channel] : chip.getChannels()) {
         channels.push_back(channel.get());
     }
-    std::vector<nodal::IFlowRatePump*> flowRatePumps;
+    std::vector<arch::FlowRatePump*> flowRatePumps;
     for (const auto& [key, pump] : chip.getFlowRatePumps()) {
         flowRatePumps.push_back(pump.get());
     }
-    std::vector<nodal::IPressurePump*> pressurePumps;
+    std::vector<arch::PressurePump*> pressurePumps;
     for (const auto& [key, pump] : chip.getPressurePumps()) {
         pressurePumps.push_back(pump.get());
     }
@@ -113,15 +113,15 @@ TEST(Chip, testNetwork2) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance*> channels;
+    std::vector<arch::Channel *> channels;
     for (const auto& [key, channel] : chip.getChannels()) {
         channels.push_back(channel.get());
     }
-    std::vector<nodal::IFlowRatePump*> flowRatePumps;
+    std::vector<arch::FlowRatePump*> flowRatePumps;
     for (const auto& [key, pump] : chip.getFlowRatePumps()) {
         flowRatePumps.push_back(pump.get());
     }
-    std::vector<nodal::IPressurePump*> pressurePumps;
+    std::vector<arch::PressurePump*> pressurePumps;
     for (const auto& [key, pump] : chip.getPressurePumps()) {
         pressurePumps.push_back(pump.get());
     }
@@ -178,15 +178,15 @@ TEST(Chip, testNetwork3) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance*> channels;
+    std::vector<arch::Channel *> channels;
     for (const auto& [key, channel] : chip.getChannels()) {
         channels.push_back(channel.get());
     }
-    std::vector<nodal::IFlowRatePump*> flowRatePumps;
+    std::vector<arch::FlowRatePump*> flowRatePumps;
     for (const auto& [key, pump] : chip.getFlowRatePumps()) {
         flowRatePumps.push_back(pump.get());
     }
-    std::vector<nodal::IPressurePump*> pressurePumps;
+    std::vector<arch::PressurePump*> pressurePumps;
     for (const auto& [key, pump] : chip.getPressurePumps()) {
         pressurePumps.push_back(pump.get());
     }
@@ -240,15 +240,15 @@ TEST(Chip, testNetwork4) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance*> channels;
+    std::vector<arch::Channel *> channels;
     for (const auto& [key, channel] : chip.getChannels()) {
         channels.push_back(channel.get());
     }
-    std::vector<nodal::IFlowRatePump*> flowRatePumps;
+    std::vector<arch::FlowRatePump*> flowRatePumps;
     for (const auto& [key, pump] : chip.getFlowRatePumps()) {
         flowRatePumps.push_back(pump.get());
     }
-    std::vector<nodal::IPressurePump*> pressurePumps;
+    std::vector<arch::PressurePump*> pressurePumps;
     for (const auto& [key, pump] : chip.getPressurePumps()) {
         pressurePumps.push_back(pump.get());
     }
@@ -301,15 +301,15 @@ TEST(Chip, testNetwork5) {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance*> channels;
+    std::vector<arch::Channel *> channels;
     for (const auto& [key, channel] : chip.getChannels()) {
         channels.push_back(channel.get());
     }
-    std::vector<nodal::IFlowRatePump*> flowRatePumps;
+    std::vector<arch::FlowRatePump*> flowRatePumps;
     for (const auto& [key, pump] : chip.getFlowRatePumps()) {
         flowRatePumps.push_back(pump.get());
     }
-    std::vector<nodal::IPressurePump*> pressurePumps;
+    std::vector<arch::PressurePump*> pressurePumps;
     for (const auto& [key, pump] : chip.getPressurePumps()) {
         pressurePumps.push_back(pump.get());
     }

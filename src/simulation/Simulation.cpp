@@ -164,18 +164,15 @@ droplet::SimulationResult Simulation::simulate() {
             matrixId++;
         }
     }
-    std::vector<nodal::IResistance*> channels;
-    for (auto& [key, channel] : chip->getChannels()) {
-        channels.push_back(channel.get());
-    }
-    std::vector<nodal::IFlowRatePump*> flowRatePumps;
-    for (auto& [key, pump] : chip->getFlowRatePumps()) {
-        flowRatePumps.push_back(pump.get());
-    }
-    std::vector<nodal::IPressurePump*> pressurePumps;
-    for (auto& [key, pump] : chip->getPressurePumps()) {
-        pressurePumps.push_back(pump.get());
-    }
+    std::vector<arch::Channel*> channels;
+    for (const auto& c: chip->getChannels())
+        channels.push_back (c.second.get());
+    std::vector<arch::FlowRatePump*> flowRatePumps;
+    for (const auto& p: chip->getFlowRatePumps())
+        flowRatePumps.push_back (p.second.get());
+    std::vector<arch::PressurePump*> pressurePumps;
+    for (const auto& p: chip->getPressurePumps())
+        pressurePumps.push_back (p.second.get());
 
     // ##########
     // Simulation Loop
