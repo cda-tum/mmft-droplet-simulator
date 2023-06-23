@@ -10,14 +10,13 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Chip.h"
+#include "../architecture/Chip.h"
 #include "Droplet.h"
-#include "DropletBoundary.h"
-#include "Event.h"
+#include "events/Event.h"
 #include "Fluid.h"
 #include "IResistanceModel.h"
 #include "Injection.h"
-#include "Results.h"
+#include "../droplet-simulator/Results.h"
 
 namespace sim {
 

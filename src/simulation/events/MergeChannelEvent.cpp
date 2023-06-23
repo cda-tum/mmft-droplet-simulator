@@ -1,9 +1,9 @@
 
 #include "MergeChannelEvent.h"
 
-#include "Droplet.h"
-#include "DropletBoundary.h"
-#include "Simulation.h"
+#include "../Droplet.h"
+#include "../DropletBoundary.h"
+#include "../Simulation.h"
 
 namespace sim {
 

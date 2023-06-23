@@ -1,6 +1,6 @@
 #include "InjectionEvent.h"
 
-#include "DropletBoundary.h"
+#include "../DropletBoundary.h"
 
 namespace sim {
 

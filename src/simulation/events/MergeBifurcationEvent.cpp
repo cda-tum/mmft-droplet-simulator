@@ -1,9 +1,9 @@
 #include "MergeBifurcationEvent.h"
 
-#include "Droplet.h"
-#include "DropletBoundary.h"
+#include "../Droplet.h"
+#include "../DropletBoundary.h"
 #include "Event.h"
-#include "Simulation.h"
+#include "../Simulation.h"
 
 namespace sim {
 

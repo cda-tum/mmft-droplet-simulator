@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Event.h"
-#include "Injection.h"
+#include "../Injection.h"
 
 namespace sim {
 

@@ -3,7 +3,7 @@
 #include <memory>
 #include <utility>
 
-#include "ChannelPosition.h"
+#include "../architecture/ChannelPosition.h"
 
 namespace sim {
 

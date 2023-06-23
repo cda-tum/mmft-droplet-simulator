@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Edge.h"
-#include "IFlowRatePump.h"
+#include "../nodalAnalysis/IFlowRatePump.h"
 #include "Node.h"
 
 namespace arch {

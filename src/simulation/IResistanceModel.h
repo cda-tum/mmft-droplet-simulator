@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Channel.h"
+#include "../architecture/Channel.h"
 
 namespace sim {
 
