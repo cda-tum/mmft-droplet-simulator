@@ -3,14 +3,12 @@
 #include <tuple>
 #include <unordered_map>
 #include <vector>
-#include "Channel.h"
-#include "FlowRatePump.h"
-#include "PressurePump.h"
+#include "../architecture/Channel.h"
+#include "../architecture/FlowRatePump.h"
+#include "../architecture/PressurePump.h"
 #include "Eigen/Dense"
-#include "IFlowRatePump.h"
 #include "INode.h"
-#include "IPressurePump.h"
-#include "IResistance.h"
+
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 

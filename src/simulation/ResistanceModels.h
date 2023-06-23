@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include "Fluid.h"
 #include "IResistanceModel.h"
 
 namespace sim {

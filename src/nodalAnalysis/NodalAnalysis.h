@@ -10,10 +10,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "IFlowRatePump.h"
 #include "INode.h"
-#include "IPressurePump.h"
-#include "IResistance.h"
 
 namespace arch { class Channel; class FlowRatePump; class PressurePump; }
 namespace nodal {

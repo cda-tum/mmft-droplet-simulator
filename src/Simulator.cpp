@@ -1,11 +1,11 @@
-#include "Simulator.h"
+#include "../droplet-simulator/Simulator.h"
 
 #include <iostream>
 #include <memory>
 
-#include "Channel.h"
-#include "Chip.h"
-#include "Results.h"
+#include "architecture/Channel.h"
+#include "architecture/Chip.h"
+#include "../droplet-simulator/Results.h"
 #include "SimulatorImpl.h"
 
 namespace droplet {

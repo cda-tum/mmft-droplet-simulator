@@ -10,24 +10,21 @@
 #include <unordered_map>
 #include <vector>
 
-#include "BoundaryHeadEvent.h"
-#include "BoundaryTailEvent.h"
-#include "Channel.h"
-#include "ChannelPosition.h"
+#include "events/BoundaryHeadEvent.h"
+#include "events/BoundaryTailEvent.h"
+#include "../architecture/Channel.h"
+#include "../architecture/ChannelPosition.h"
 #include "Droplet.h"
 #include "DropletBoundary.h"
-#include "IFlowRatePump.h"
-#include "INode.h"
-#include "IPressurePump.h"
-#include "IResistance.h"
+#include "../nodalAnalysis/INode.h"
 #include "Injection.h"
-#include "InjectionEvent.h"
-#include "MergeBifurcationEvent.h"
-#include "MergeChannelEvent.h"
-#include "NodalAnalysis.h"
+#include "events/InjectionEvent.h"
+#include "events/MergeBifurcationEvent.h"
+#include "events/MergeChannelEvent.h"
+#include "../nodalAnalysis/NodalAnalysis.h"
 #include "ResistanceModels.h"
-#include "Results.h"
-#include "TimeStepEvent.h"
+#include "../droplet-simulator/Results.h"
+#include "events/TimeStepEvent.h"
 
 namespace sim {
 

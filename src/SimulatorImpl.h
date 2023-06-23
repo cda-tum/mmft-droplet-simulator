@@ -3,8 +3,8 @@
  */
 #pragma once
 
-#include "Chip.h"
-#include "Simulation.h"
+#include "architecture/Chip.h"
+#include "simulation/Simulation.h"
 
 namespace droplet {
 

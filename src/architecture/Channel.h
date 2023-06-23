@@ -5,7 +5,7 @@
 #pragma once
 
 #include "Edge.h"
-#include "IResistance.h"
+#include "../nodalAnalysis/IResistance.h"
 #include "Node.h"
 
 namespace arch {

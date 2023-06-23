@@ -12,7 +12,7 @@
 #include <utility>
 #include <vector>
 
-#include "Channel.h"
+#include "../architecture/Channel.h"
 #include "DropletBoundary.h"
 #include "Fluid.h"
 #include "IResistanceModel.h"

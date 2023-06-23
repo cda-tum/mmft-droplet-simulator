@@ -3,9 +3,9 @@
  */
 #pragma once
 
-#include "Channel.h"
-#include "ChannelPosition.h"
-#include "Chip.h"
+#include "../architecture/Channel.h"
+#include "../architecture/ChannelPosition.h"
+#include "../architecture/Chip.h"
 
 namespace sim {
 
