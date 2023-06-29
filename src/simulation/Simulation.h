@@ -46,6 +46,7 @@ class Simulation {
     double iState = 0;                                                   ///< The current index of the next state.
     bool dropletsAtBifurcation = false;                                  ///< If one or more droplets are currently at a bifurcation. Triggers the usage of the maximal adaptive time step.
     bool enableMerging = true;                                           ///< If the droplet merging simulation should be performed.
+    uint maxIterations = 1000000;                                        ///< Maximum iterations performed before computations are aborted.
 
     /**
      * @brief Initializes the resistance model and the channel resistances of the empty channels.

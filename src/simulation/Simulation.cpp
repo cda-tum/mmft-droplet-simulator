@@ -10,20 +10,20 @@
 #include <unordered_map>
 #include <vector>
 
-#include "events/BoundaryHeadEvent.h"
-#include "events/BoundaryTailEvent.h"
 #include "../architecture/Channel.h"
 #include "../architecture/ChannelPosition.h"
+#include "../droplet-simulator/Results.h"
+#include "../nodalAnalysis/INode.h"
+#include "../nodalAnalysis/NodalAnalysis.h"
 #include "Droplet.h"
 #include "DropletBoundary.h"
-#include "../nodalAnalysis/INode.h"
 #include "Injection.h"
+#include "ResistanceModels.h"
+#include "events/BoundaryHeadEvent.h"
+#include "events/BoundaryTailEvent.h"
 #include "events/InjectionEvent.h"
 #include "events/MergeBifurcationEvent.h"
 #include "events/MergeChannelEvent.h"
-#include "../nodalAnalysis/NodalAnalysis.h"
-#include "ResistanceModels.h"
-#include "../droplet-simulator/Results.h"
 #include "events/TimeStepEvent.h"
 
 namespace sim {
@@ -162,14 +162,16 @@ droplet::SimulationResult Simulation::simulate() {
         }
     }
     std::vector<arch::Channel*> channels;
-    for (const auto& c: chip->getChannels())
-        channels.push_back (c.second.get());
+    for (const auto& c : chip->getChannels())
+        channels.push_back(c.second.get());
     std::vector<arch::FlowRatePump*> flowRatePumps;
-    for (const auto& p: chip->getFlowRatePumps())
-        flowRatePumps.push_back (p.second.get());
+    for (const auto& p : chip->getFlowRatePumps())
+        flowRatePumps.push_back(p.second.get());
     std::vector<arch::PressurePump*> pressurePumps;
-    for (const auto& p: chip->getPressurePumps())
-        pressurePumps.push_back (p.second.get());
+    for (const auto& p : chip->getPressurePumps())
+        pressurePumps.push_back(p.second.get());
+
+    uint iteration = 0;
 
     // ##########
     // Simulation Loop
@@ -182,6 +184,11 @@ droplet::SimulationResult Simulation::simulate() {
     // * move droplets
     // * perform event
     while (true) {
+
+        if (iteration >= maxIterations) {
+            throw "Max iterations exceeded.";
+        }
+
         // update droplet resistances (in the first iteration no  droplets are inside the network)
         updateDropletResistances();
 
@@ -251,6 +258,8 @@ droplet::SimulationResult Simulation::simulate() {
         // only one event at a time is performed in order to ensure a correct state
         // hence, it might happen that the next time for an event is 0 (e.g., when  multiple events happen at the same time)
         nextEvent->performEvent();
+
+        iteration++;
     }
 
     return result;
@@ -337,7 +346,9 @@ std::vector<std::unique_ptr<Event>> Simulation::computeEvents() {
 
                 if (mergeDroplet == nullptr) {
                     // no merging will happen => BoundaryHeadEvent
-                    events.push_back(std::make_unique<BoundaryHeadEvent>(time, *droplet, *boundary, *chip));
+                    if (!boundary->isInWaitState()) {
+                        events.push_back(std::make_unique<BoundaryHeadEvent>(time, *droplet, *boundary, *chip));
+                    }
                 } else {
                     // merging of the actual droplet with the merge droplet will happen => MergeBifurcationEvent
                     events.push_back(std::make_unique<MergeBifurcationEvent>(time, *droplet, *boundary, *mergeDroplet, *this));
