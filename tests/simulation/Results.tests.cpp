@@ -920,3 +920,37 @@ TEST(Results, noSink2) {
 
     ASSERT_EQ(result.chip.name, "");
 }
+
+TEST(Results, noSinkTwoDroplets) {
+    droplet::Simulator sim;
+
+    int nodeGroundId = -1;
+    int node0Id = 0;
+    int node1Id = 1;
+
+    auto flowRate = 3e-11;
+    auto pump = sim.addFlowRatePump(nodeGroundId, node0Id, flowRate);
+
+    auto cWidth = 100e-6;
+    auto cHeight = 30e-6;
+    auto cLength = 1000e-6;
+
+    auto c1 = sim.addChannel(node0Id, node1Id, cHeight, cWidth, cLength);
+    auto c2 = sim.addChannel(node1Id, nodeGroundId, cHeight, cWidth, cLength);
+
+    sim.addGround(nodeGroundId);
+
+    auto fluid0 = sim.addFluid(1e-3, 1e3);
+    auto fluid1 = sim.addFluid(3e-3, 1e3);
+    sim.setContinuousPhase(fluid0);
+
+    auto dropletVolume = 1.5 * cWidth * cWidth * cHeight;
+    auto droplet0 = sim.addDroplet(fluid1, dropletVolume, 0.0, c2, 0.5);
+    auto droplet1 = sim.addDroplet(fluid1, dropletVolume, 0.0, c1, 0.5);
+
+    sim.checkChipValidity();
+
+    droplet::SimulationResult result = sim.simulate();
+
+    ASSERT_EQ(result.chip.name, "");
+}
