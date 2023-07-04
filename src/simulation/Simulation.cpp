@@ -171,7 +171,7 @@ droplet::SimulationResult Simulation::simulate() {
     for (const auto& p : chip->getPressurePumps())
         pressurePumps.push_back(p.second.get());
 
-    uint iteration = 0;
+    unsigned iteration = 0;
 
     // ##########
     // Simulation Loop
