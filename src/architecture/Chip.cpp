@@ -24,9 +24,9 @@ Node* Chip::getOrAddNode(int nodeId) {
 
 void Chip::visitNodes(int id, std::unordered_map<int, bool>& visitedNodes, std::unordered_map<int, bool>& visitedChannels) {
     const auto net = network.at(id);
+    visitedNodes.at(id) = true;
     for (Channel* channel : net) {
         if (!(channel->getChannelType() == ChannelType::CLOGGABLE)) {
-            visitedNodes.at(id) = true;
             if (visitedChannels[channel->getId()] == false) {
                 visitedChannels.at(channel->getId()) = true;
                 if (channel->getNode0()->getId() != id) {
@@ -230,7 +230,9 @@ bool Chip::isNetworkValid() {
         visitedChannels[k] = false;
     }
 
-    visitNodes(*getGroundIds().begin(), visitedNodes, visitedChannels);
+    for (auto& node : groundNodes) {
+        visitNodes(node->getId(), visitedNodes, visitedChannels);
+    }
 
     std::string errorNodes = "";
     for (auto const& [k, v] : nodes) {
