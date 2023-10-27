@@ -25,7 +25,7 @@ class Chip {
     std::string name;                                                      ///< Name of the chip.
     std::unordered_map<int, std::unique_ptr<Node>> nodes;                  ///< Nodes the network of the chip consists of.
     std::set<Node*> sinks;                                                 ///< Ids of nodes that are sinks.
-    Node* groundNode = nullptr;                                            ///< Pointer to the ground node.
+    std::set<Node*> groundNodes;                                           ///< Ids of nodes that are ground nodes.
     std::unordered_map<int, std::unique_ptr<Channel>> channels;            ///< Map of ids and channel pointer of all channels the chip consists of.
     std::unordered_map<int, std::unique_ptr<PressurePump>> pressurePumps;  ///< Map of ids and pressure pump pointers of all pressure pumps the chip consists of.
     std::unordered_map<int, std::unique_ptr<FlowRatePump>> flowRatePumps;  ///< Map of ids of flow rate pump pointers of all flow rate pumps the chip consists of.
@@ -127,13 +127,13 @@ class Chip {
      * @brief Returns the id of the ground node.
      * @return Id of the ground node.
      */
-    int getGroundId() const;
+    std::set<int> getGroundIds() const;
 
     /**
      * @brief Returns a pointer to the ground node.
      * @return Pointer to the ground node.
      */
-    Node* getGroundNode() const;
+    std::set<Node*> getGroundNodes() const;
 
     /**
      * @brief Checks if a node with the specified id exists in the network.

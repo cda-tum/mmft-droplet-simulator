@@ -154,7 +154,7 @@ droplet::SimulationResult Simulation::simulate() {
     int matrixId = 0;
     for (auto& [nodeId, node] : chip->getNodes()) {
         // if node is ground node set the matrixId to -1
-        if (nodeId == chip->getGroundId()) {
+        if (chip->getGroundIds().count(nodeId)) {
             nodes.insert_or_assign(nodeId, std::make_tuple(node.get(), -1));
         } else {
             nodes.insert_or_assign(nodeId, std::make_tuple(node.get(), matrixId));

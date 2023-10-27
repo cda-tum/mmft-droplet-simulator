@@ -42,6 +42,7 @@ int main(int argc, char const* argv[]) {
     std::cout << "--- ground ---" << std::endl;
     // define that node 0 is the ground node
     sim.addGround(0);
+    sim.addGround(3);
 
     // 6. add fluids
     std::cout << "--- fluids ---" << std::endl;

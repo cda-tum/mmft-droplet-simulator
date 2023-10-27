@@ -115,22 +115,31 @@ void Chip::addSink(int nodeId) {
 }
 
 void Chip::addGround(int nodeId) {
-    groundNode = getOrAddNode(nodeId);
+    auto groundNode = getOrAddNode(nodeId);
+
+    //insert ground node into groundNodes (does nothing if ground node is already present in groundNodes)
+    groundNodes.insert(groundNode);
 }
 
 bool Chip::isSink(int nodeId) const {
     return sinks.count(nodes.at(nodeId).get()) == 1;
 }
 
-int Chip::getGroundId() const {
-    if (groundNode == nullptr) {
+std::set<int> Chip::getGroundIds() const {
+    if (groundNodes.empty()) {
         throw std::invalid_argument("Ground node not defined.");
     }
-    return groundNode->getId();
+
+    std::set<int> groundIds;
+    for (auto groundNode : groundNodes) {
+        groundIds.insert(groundNode->getId());
+    }
+
+    return groundIds;
 }
 
-Node* Chip::getGroundNode() const {
-    return groundNode;
+std::set<Node*> Chip::getGroundNodes() const {
+    return groundNodes;
 }
 
 bool Chip::hasNode(int nodeId) const {
@@ -221,7 +230,7 @@ bool Chip::isNetworkValid() {
         visitedChannels[k] = false;
     }
 
-    visitNodes(getGroundId(), visitedNodes, visitedChannels);
+    visitNodes(*getGroundIds().begin(), visitedNodes, visitedChannels);
 
     std::string errorNodes = "";
     for (auto const& [k, v] : nodes) {
