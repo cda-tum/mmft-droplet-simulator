@@ -251,6 +251,33 @@ bool Chip::isNetworkValid() {
         throw std::invalid_argument("Chip is invalid. The following nodes are not connected to ground: " + errorNodes + ". The following channels are not connected to ground: " + errorChannels);
         return false;
     }
+
+    for (auto const& [k, v] : nodes) {
+        const auto net = network.at(k);
+        int connections = net.size();
+        for (auto const& [key, pump] : pressurePumps) {
+            if (pump->getNode0()->getId() == k || pump->getNode1()->getId() == k) {
+                connections +=1 ;
+            }
+        }
+        for (auto const& [key, pump] : flowRatePumps) {
+            if (pump->getNode0()->getId() == k || pump->getNode1()->getId() == k) {
+                connections +=1 ;
+            }
+        }
+        if (connections <= 1 && !getGroundIds().count(k)) {
+            for (Channel* channel : net) {
+                errorChannels.append(" " + std::to_string(channel->getId()));
+            }
+            errorNodes.append(" " + std::to_string(k));
+        }
+    }
+
+    if (errorNodes.length() != 0) {
+        throw std::invalid_argument("Chip is invalid. The following nodes are dangling but not ground nodes: " + errorNodes + ". Please set these nodes to ground nodes." );
+        return false;
+    }
+
     return true;
 }
 
