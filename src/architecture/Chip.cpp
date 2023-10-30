@@ -236,23 +236,6 @@ bool Chip::isNetworkValid() {
 
     std::string errorNodes = "";
     for (auto const& [k, v] : nodes) {
-        if (visitedNodes[k] == false) {
-            errorNodes.append(" " + std::to_string(k));
-        }
-    }
-    std::string errorChannels = "";
-    for (auto const& [k, v] : channels) {
-        if (visitedChannels[k] == false) {
-            errorChannels.append(" " + std::to_string(k));
-        }
-    }
-
-    if (errorNodes.length() != 0 || errorChannels.length() != 0) {
-        throw std::invalid_argument("Chip is invalid. The following nodes are not connected to ground: " + errorNodes + ". The following channels are not connected to ground: " + errorChannels);
-        return false;
-    }
-
-    for (auto const& [k, v] : nodes) {
         const auto net = network.at(k);
         int connections = net.size();
         for (auto const& [key, pump] : pressurePumps) {
@@ -266,15 +249,29 @@ bool Chip::isNetworkValid() {
             }
         }
         if (connections <= 1 && !getGroundIds().count(k)) {
-            for (Channel* channel : net) {
-                errorChannels.append(" " + std::to_string(channel->getId()));
-            }
             errorNodes.append(" " + std::to_string(k));
         }
     }
 
     if (errorNodes.length() != 0) {
         throw std::invalid_argument("Chip is invalid. The following nodes are dangling but not ground nodes: " + errorNodes + ". Please set these nodes to ground nodes." );
+        return false;
+    }
+
+    for (auto const& [k, v] : nodes) {
+        if (visitedNodes[k] == false) {
+            errorNodes.append(" " + std::to_string(k));
+        }
+    }
+    std::string errorChannels = "";
+    for (auto const& [k, v] : channels) {
+        if (visitedChannels[k] == false) {
+            errorChannels.append(" " + std::to_string(k));
+        }
+    }
+
+    if (errorNodes.length() != 0 || errorChannels.length() != 0) {
+        throw std::invalid_argument("Chip is invalid. The following nodes are not connected to ground: " + errorNodes + ". The following channels are not connected to ground: " + errorChannels);
         return false;
     }
 
