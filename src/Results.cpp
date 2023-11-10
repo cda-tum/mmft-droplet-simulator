@@ -283,4 +283,13 @@ SimulationResult SimulationResult::fromJson(std::string jsonString) {
     return results;
 }
 
+
+std::unordered_map<int, double> SimulationResult::getPressures() const {
+    return states[0].pressures;
+}
+
+std::unordered_map<int, double> SimulationResult::getFlowRates() const {
+    return states[0].flowRates;
+}
+
 }  // namespace droplet

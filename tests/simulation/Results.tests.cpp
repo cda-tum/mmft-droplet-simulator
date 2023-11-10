@@ -954,3 +954,116 @@ TEST(Results, noSinkTwoDroplets) {
 
     ASSERT_EQ(result.chip.name, "");
 }
+
+
+TEST(Chip, triangleNetwork) {
+    auto cWidth = 100e-6;
+    auto cHeight = 30e-6;
+    auto cLength = 1000e-6;
+    
+    // define network 1
+    droplet::Simulator sim1;
+
+    int c1 = sim1.addChannel(1, 2, cHeight, cWidth, cLength);
+    int c2 = sim1.addChannel(2, 0, cHeight, cWidth, cLength);
+    int v0 = sim1.addPressurePump(0, 1, 1000.0);
+
+    sim1.addGround(0);
+    auto fluid0 = sim1.addFluid(1e-3, 1e3);
+    sim1.setContinuousPhase(fluid0);
+    sim1.checkChipValidity();
+
+    // define network 2
+    droplet::Simulator sim2;
+
+    int c3 = sim2.addChannel(2, 1, cHeight, cWidth, cLength);
+    int c4 = sim2.addChannel(0, 2, cHeight, cWidth, cLength);
+    int v1 = sim2.addPressurePump(0, 1, 1000.0);
+
+    sim2.addGround(0);
+    auto fluid1 = sim2.addFluid(1e-3, 1e3);
+    sim2.setContinuousPhase(fluid1);
+    sim2.checkChipValidity();
+
+    // Simulate
+
+    auto result1 = sim1.simulate();
+    auto result2 = sim2.simulate();
+
+    auto pressures1 = result1.getPressures();
+    auto pressures2 = result2.getPressures();
+    auto flowrates1 = result1.getFlowRates();
+    auto flowrates2 = result2.getFlowRates();
+
+    // Print results
+    std::cout << "Node\tDiff" << std::endl;
+    for (auto const& [key, pressure] : pressures1) {
+        std::cout << key <<"\t" << pressure - pressures2[key] << std::endl;
+    }
+    std::cout << "\nChannel\tDiff" << std::endl;
+    std::cout << 0 <<"\t" << flowrates1[0] + flowrates2[0] << std::endl;
+    std::cout << 1 <<"\t" << flowrates1[1] + flowrates2[1] << std::endl;
+    std::cout << 2 <<"\t" << flowrates1[2] - flowrates2[2] << std::endl;
+}
+
+TEST(Chip, Y_Network) {
+    auto cWidth = 10e-6;
+    auto cHeight = 3e-6;
+    auto cLength = 100e-6;
+    
+    // define network 1
+    droplet::Simulator sim1;
+
+    int c1 = sim1.addChannel(1, 2, cHeight, cWidth, cLength);
+    int c2 = sim1.addChannel(2, 3, cHeight, cWidth, cLength);
+    int c3 = sim1.addChannel(2, 4, cHeight, cWidth, cLength);
+    int v0 = sim1.addPressurePump(0, 1, 1000.0);
+    int v1 = sim1.addPressurePump(5, 3, 1000.0);
+
+    sim1.addGround(0);
+    sim1.addGround(4);
+    sim1.addGround(5);
+
+    auto fluid0 = sim1.addFluid(1e-3, 1e3);
+    sim1.setContinuousPhase(fluid0);
+    sim1.checkChipValidity();
+
+    // define network 2
+    droplet::Simulator sim2;
+
+    int c4 = sim2.addChannel(2, 1, cHeight, cWidth, cLength);
+    int c5 = sim2.addChannel(3, 2, cHeight, cWidth, cLength);
+    int c6 = sim2.addChannel(4, 2, cHeight, cWidth, cLength);
+    int v2 = sim2.addPressurePump(0, 1, 1000.0);
+    int v3 = sim2.addPressurePump(5, 3, 1000.0);
+
+    sim2.addGround(0);
+    sim2.addGround(4);
+    sim2.addGround(5);
+
+    auto fluid1 = sim2.addFluid(1e-3, 1e3);
+    sim2.setContinuousPhase(fluid1);
+    sim2.checkChipValidity();
+
+    // Simulate
+
+    auto result1 = sim1.simulate();
+    auto result2 = sim2.simulate();
+
+    auto pressures1 = result1.getPressures();
+    auto pressures2 = result2.getPressures();
+    auto flowrates1 = result1.getFlowRates();
+    auto flowrates2 = result2.getFlowRates();
+
+    // Print results
+    std::cout << "Node\tDiff" << std::endl;
+    for (auto const& [key, pressure] : pressures1) {
+        std::cout << key <<"\t" << pressure - pressures2[key] << std::endl;
+    }
+    std::cout << "\nChannel\tDiff" << std::endl;
+    std::cout << 0 <<"\t" << flowrates1[0] + flowrates2[0] << std::endl;
+    std::cout << 1 <<"\t" << flowrates1[1] + flowrates2[1] << std::endl;
+    std::cout << 2 <<"\t" << flowrates1[2] + flowrates2[2] << std::endl;
+    std::cout << 3 <<"\t" << flowrates1[3] - flowrates2[3] << std::endl;
+    std::cout << 4 <<"\t" << flowrates1[4] - flowrates2[4] << std::endl;
+}

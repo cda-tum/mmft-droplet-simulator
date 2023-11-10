@@ -354,6 +354,18 @@ struct SimulationResult {
      * @return SimulationResult struct
      */
     static SimulationResult fromJson(std::string json);
+
+    /**
+     * @brief Get the simulated pressures at the nodes.
+     * @return Vector of pressure values
+     */
+    std::unordered_map<int, double> getPressures() const;
+
+    /**
+     * @brief Get the simulated flowrates in the channels.
+     * @return Vector of flowrate values
+     */
+    std::unordered_map<int, double> getFlowRates() const;
 };
 
 }  // namespace droplet
