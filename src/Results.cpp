@@ -101,6 +101,57 @@ DropletPath SimulationResult::getDropletPath(int dropletId) const {
     return dropletPath;
 }
 
+std::string SimulationResult::toJson(int indent) const { 
+    nlohmann::json json;
+
+    json["results"] = nlohmann::json::object();
+    json["results"]["network"] = nlohmann::json::array();
+    for (auto const& state : states) {
+
+        auto nodes = nlohmann::json::array();
+        for (auto const& [key, pressure] : state.pressures) {
+            nodes.push_back({{"pressure", pressure}});
+        }
+
+        auto channels = nlohmann::json::array();
+        for (auto const& [key, flowRate] : state.flowRates) {
+            channels.push_back({{"flowRate", flowRate}});
+        }
+
+        auto bigDroplets = nlohmann::json::array();
+        for (auto const& [key, dropletPosition] : state.dropletPositions) {
+            //dropletPosition
+            auto bigDroplet = nlohmann::json::object();
+
+            //state
+            bigDroplet["id"] = key;
+            bigDroplet["fluid"] = droplets.at(key).fluidId;
+
+            //boundaries
+            bigDroplet["boundaries"] = nlohmann::json::array();
+            for(auto const &boundary : dropletPosition.boundaries) {
+                bigDroplet["boundaries"].push_back({
+                    {"volumeTowards1", boundary.volumeTowards0},
+                    {"position", {
+                        {"channelId", boundary.position.channelId},
+                        {"position", boundary.position.position}}
+                    }
+                });
+            }
+
+            //channels
+            bigDroplet["channels"] = nlohmann::json::array();
+            for (auto const& channelId : dropletPosition.channelIds) {
+                bigDroplet["channels"].push_back(channelId);
+            }
+            bigDroplets.push_back(bigDroplet);
+        }
+
+        json["network"].push_back({{"time", state.time}, {"nodes", nodes}, {"channels", channels}, {"bigDroplets", bigDroplets}});
+    }
+    return json.dump(indent);
+}
+/*
 std::string SimulationResult::toJson(int indent) const {
     nlohmann::json json;
 
@@ -171,9 +222,7 @@ std::string SimulationResult::toJson(int indent) const {
             jsonDropletPosition["boundaries"] = nlohmann::json::array();
             for(auto const &boundary : dropletPosition.boundaries) {
                 jsonDropletPosition["boundaries"].push_back({
-                    {"volumeTowards0", boundary.volumeTowards0},
-                    {"flowRate", boundary.flowRate},
-                    {"state", boundary.state},
+                    {"volumeTowards1", boundary.volumeTowards0},
                     {"position", {
                         {"channelId", boundary.position.channelId},
                         {"position", boundary.position.position}}
@@ -198,7 +247,7 @@ std::string SimulationResult::toJson(int indent) const {
 
     return json.dump(indent);
 }
-
+*/
 SimulationResult SimulationResult::fromJson(std::string jsonString) {
     auto json = nlohmann::json::parse(jsonString);
 

@@ -9,8 +9,6 @@
 #include "Eigen/Dense"
 #include "INode.h"
 
-#include <iostream>
-
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
@@ -22,7 +20,7 @@ void conductNodalAnalysis(const std::unordered_map<int, std::tuple<INode*, int>>
     const int nFlowRatePumps = flowRatePumps.size();
     const int nNodesAndPressurePumps = nNodes + nPressurePumps;
     const int groundNodeMatrixId = -1;
-    
+
     int p = (int)(log((*channels.begin())->getResistance())/log(10));
 
     Eigen::MatrixXd A = Eigen::MatrixXd::Zero(nNodesAndPressurePumps, nNodesAndPressurePumps);  // matrix A = [G, B; C, D]
